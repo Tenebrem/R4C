@@ -3,4 +3,5 @@ from .serializers import RobotSerializer
 
 
 class RobotCreateView(CreateAPIView):
+    """ Вьюсет создания робота"""
     serializer_class = RobotSerializer
