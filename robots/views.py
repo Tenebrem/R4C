@@ -9,15 +9,18 @@ from openpyxl.styles.alignment import Alignment
 
 from .models import Robot
 
+DAY_PERIOD = 7
+COLUMN_WIDTH = 22
+
 
 class ExcelExportView(View):
     """ Создает excele файл с данным за неделю."""
     def get(self, request):
         # Узнаем начало и конец прошлой недели
         today = datetime.now()
-        days_to_subtract = today.weekday() + 7
+        days_to_subtract = today.weekday() + DAY_PERIOD
         start_of_last_week = today - timedelta(days=days_to_subtract)
-        end_of_last_week = start_of_last_week + timedelta(days=6)
+        end_of_last_week = start_of_last_week + timedelta(days=DAY_PERIOD-1)
         # Запращиваем в бд даныне за этот период
         data = Robot.objects.filter(
             created__date__range=(
@@ -48,7 +51,7 @@ class ExcelExportView(View):
             if model not in workbook.sheetnames:
                 worksheet = workbook.create_sheet(model)
                 worksheet.append(['Модель', 'Версия', 'Количество за неделю'])
-                worksheet.column_dimensions['C'].width = 22
+                worksheet.column_dimensions['C'].width = COLUMN_WIDTH
             else:
                 worksheet = workbook[model]
 
