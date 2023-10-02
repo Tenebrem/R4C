@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from robots.views import ExcelExportView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('export/', ExcelExportView.as_view(), name='export_excel'),
 ]
