@@ -21,10 +21,4 @@ def robot():
     return robots
 
 
-@pytest.fixture
-def order(customer):
-    order = Order.objects.create(
-        customer=customer,
-        robot_serial='R2-D2'
-    )
-    return order
+
